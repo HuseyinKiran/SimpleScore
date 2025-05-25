@@ -12,7 +12,6 @@
 <p float="left">
   <img src="images/matchresults.png" width="32%" style="margin-right: 2%;" />
   <img src="images/goalkings.png" width="32%" style="margin-right: 2%;" />
-  <img src="images/another.png" width="32%" />
 </p>
 
 
