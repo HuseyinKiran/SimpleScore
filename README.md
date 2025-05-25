@@ -1,5 +1,5 @@
 🔍 Overview
-SimpleScore is a modern football standings app that allows users to browse different football leagues and view live standings, match results, and top scorer stats.
+ * SimpleScore is a modern football standings app that allows users to browse different football leagues and view live standings, match results, and top scorer stats.
 
 ## Screenshots
 
