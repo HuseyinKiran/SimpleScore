@@ -4,11 +4,11 @@ SimpleScore is a modern football standings app that allows users to browse diffe
 ## Screenshots
 
 <p float="left">
-  <img src="images/splash.png" width="300" />
-  <img src="images/leaguelist.png" width="300" />
-  <img src="images/leaguestanding.png" width="300" />
-  <img src="images/matchresults.png" width="300" />
-  <img src="images/goalkings.png" width="300" />
+  <img src="images/splash.png" width="250" />
+  <img src="images/leaguelist.png" width="250" />
+  <img src="images/leaguestanding.png" width="250" />
+  <img src="images/matchresults.png" width="250" />
+  <img src="images/goalkings.png" width="250" />
 </p>
 
 
