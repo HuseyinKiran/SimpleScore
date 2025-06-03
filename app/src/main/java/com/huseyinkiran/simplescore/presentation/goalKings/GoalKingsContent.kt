@@ -1,5 +1,6 @@
 package com.huseyinkiran.simplescore.presentation.goalKings
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -72,10 +74,11 @@ fun GoalKingsBar() {
 
 @Composable
 fun GoalKingItem(goalKing: GoalKingUIModel) = with(goalKing) {
+    val isLandscape = isLandscape()
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 2.dp)
+            .padding(horizontal = if (isLandscape) 24.dp else 8.dp, vertical = 2.dp)
     ) {
         Text(
             text = name,
@@ -92,4 +95,10 @@ fun GoalKingItem(goalKing: GoalKingUIModel) = with(goalKing) {
         )
     }
     HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+}
+
+@Composable
+fun isLandscape(): Boolean {
+    val configuration = LocalConfiguration.current
+    return configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 }
