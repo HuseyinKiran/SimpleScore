@@ -3,11 +3,15 @@ package com.huseyinkiran.simplescore.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -20,7 +24,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,19 +37,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.huseyinkiran.simplescore.R
 import com.huseyinkiran.simplescore.presentation.leagueList.LeagueListScreen
 import com.huseyinkiran.simplescore.presentation.leaguetabs.LeagueTabsScreen
+import com.huseyinkiran.simplescore.presentation.navigation.Screen
 import com.huseyinkiran.simplescore.presentation.splash.SplashScreen
 import com.huseyinkiran.simplescore.ui.theme.SimpleScoreTheme
-import com.huseyinkiran.simplescore.presentation.navigation.Screen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             SimpleScoreTheme {
                 SimpleScore()
@@ -58,22 +61,20 @@ class MainActivity : ComponentActivity() {
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun SimpleScore() {
-    val navController = rememberNavController()
-    val systemUiController = rememberSystemUiController()
-    val statusBarColor = colorResource(R.color.app_bar_color)
 
+    val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    SideEffect {
-        systemUiController.setStatusBarColor(
-            color = statusBarColor,
-            darkIcons = false
-        )
+    val contentWindowInsets = when (currentRoute) {
+        Screen.LeagueList.route -> WindowInsets.safeDrawing
+        Screen.SplashScreen.route -> WindowInsets.ime
+        else -> WindowInsets.navigationBars
     }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        contentWindowInsets = contentWindowInsets,
         topBar = {
             if (currentRoute != Screen.SplashScreen.route) {
                 CenterAlignedTopAppBar(
@@ -85,7 +86,8 @@ fun SimpleScore() {
                             Text(
                                 text = "SimpleScore",
                                 textAlign = TextAlign.Center,
-                                color = Color.White
+                                color = Color.White,
+                                style = MaterialTheme.typography.titleMedium
                             )
                         }
                     },
@@ -109,7 +111,6 @@ fun SimpleScore() {
                         containerColor = colorResource(R.color.app_bar_color),
                         titleContentColor = MaterialTheme.colorScheme.onSurface
                     ),
-                    modifier = Modifier.height(48.dp)
                 )
             }
         }) { paddingValues ->
