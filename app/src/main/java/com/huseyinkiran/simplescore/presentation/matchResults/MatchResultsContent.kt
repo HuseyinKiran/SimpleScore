@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -80,10 +81,11 @@ fun MatchResultItem(matchResult: MatchResultUIModel) = with(matchResult) {
     ) {
         Text(
             text = formattedDate,
-            modifier = Modifier.weight(0.25f),
+            modifier = Modifier.weight(0.20f),
             textAlign = TextAlign.Center,
             fontSize = 12.sp
         )
+        Spacer(modifier = Modifier.weight(0.025f))
         Text(
             text = home,
             modifier = Modifier.weight(0.275f),
@@ -105,6 +107,7 @@ fun MatchResultItem(matchResult: MatchResultUIModel) = with(matchResult) {
             fontSize = 12.sp,
             fontWeight = FontWeight.SemiBold
         )
+        Spacer(modifier = Modifier.weight(0.025f))
     }
     HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
 }
