@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,15 +31,46 @@ import com.huseyinkiran.simplescore.presentation.goalKings.model.GoalKingUIModel
 import com.huseyinkiran.simplescore.presentation.leagueList.model.LeagueUIModel
 
 @Composable
-fun GoalKingsContent(league: LeagueUIModel, goalKings: List<GoalKingUIModel>) {
+fun GoalKingsContent(
+    league: LeagueUIModel,
+    goalKings: List<GoalKingUIModel>,
+    isLoading: Boolean,
+    errorMessage: String?
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         LeagueInfoLayout(league = league)
         GoalKingsBar()
-        LazyColumn {
-            items(goalKings) {
-                GoalKingItem(it)
+        when {
+            isLoading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            errorMessage != null -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = errorMessage.ifBlank { "Beklenmeyen bir hata oluştu" },
+                        textAlign = TextAlign.Center,
+                        color = Color.Red
+                    )
+                }
+            }
+
+            else -> {
+                LazyColumn {
+                    items(goalKings) {
+                        GoalKingItem(it)
+                    }
+                }
             }
         }
+
     }
 }
 

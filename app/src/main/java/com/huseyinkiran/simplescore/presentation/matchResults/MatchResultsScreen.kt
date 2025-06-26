@@ -14,11 +14,17 @@ import com.huseyinkiran.simplescore.presentation.leagueList.model.LeagueUIModel
 fun MatchResultsScreen(leagueKey: String, league: LeagueUIModel) {
 
     val viewModel: MatchResultsViewModel = hiltViewModel()
-    val matchResults by viewModel.matchResults.collectAsState()
+    val state by viewModel.matchResults.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchMatchResults(leagueKey)
     }
 
-    MatchResultsContent(league = league, matchResults = matchResults)
+    MatchResultsContent(
+        league = league,
+        matchResults = state.matchResults,
+        isLoading = state.isLoading,
+        errorMessage = state.errorMessage
+    )
+
 }

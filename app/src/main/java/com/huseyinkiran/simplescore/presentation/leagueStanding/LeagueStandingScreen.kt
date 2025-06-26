@@ -11,11 +11,17 @@ import com.huseyinkiran.simplescore.presentation.leagueList.model.LeagueUIModel
 fun LeagueStandingScreen(leagueKey: String, league: LeagueUIModel) {
 
     val viewModel: LeagueStandingViewModel = hiltViewModel()
-    val leagueStanding by viewModel.leagueStanding.collectAsState()
+    val state by viewModel.leagueStanding.collectAsState()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(leagueKey) {
         viewModel.fetchLeagueStanding(leagueKey)
     }
 
-    LeagueStandingContent(league = league, teamList = leagueStanding)
+    LeagueStandingContent(
+        league = league,
+        teamList = state.teamsStanding,
+        isLoading = state.isLoading,
+        errorMessage = state.errorMessage
+    )
+
 }

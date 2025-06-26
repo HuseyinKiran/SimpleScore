@@ -11,11 +11,17 @@ import com.huseyinkiran.simplescore.presentation.leagueList.model.LeagueUIModel
 fun GoalKingsScreen(leagueKey: String, league: LeagueUIModel) {
 
     val viewModel: GoalKingsViewModel = hiltViewModel()
-    val goalKings by viewModel.goalKings.collectAsState()
+    val state by viewModel.goalKings.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchGoalKings(leagueKey)
     }
 
-    GoalKingsContent(league = league, goalKings = goalKings)
+    GoalKingsContent(
+        league = league,
+        goalKings = state.goalKings,
+        isLoading = state.isLoading,
+        errorMessage = state.errorMessage
+    )
+
 }

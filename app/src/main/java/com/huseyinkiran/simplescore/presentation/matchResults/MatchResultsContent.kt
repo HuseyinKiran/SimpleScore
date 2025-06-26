@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,14 +32,46 @@ import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MatchResultsContent(league: LeagueUIModel, matchResults: List<MatchResultUIModel>) {
+fun MatchResultsContent(
+    league: LeagueUIModel,
+    matchResults: List<MatchResultUIModel>,
+    isLoading: Boolean,
+    errorMessage: String?
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         LeagueInfoLayout(league = league)
         MatchResultsBar()
-        LazyColumn {
-            items(matchResults) {
-                MatchResultItem(it)
+
+        when {
+            isLoading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
             }
+
+            errorMessage != null -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = errorMessage.ifBlank { "Beklenmeyen bir hata oluştu" },
+                        textAlign = TextAlign.Center,
+                        color = Color.Red
+                    )
+                }
+            }
+
+            else -> {
+                LazyColumn {
+                    items(matchResults) {
+                        MatchResultItem(it)
+                    }
+                }
+            }
+
         }
     }
 }

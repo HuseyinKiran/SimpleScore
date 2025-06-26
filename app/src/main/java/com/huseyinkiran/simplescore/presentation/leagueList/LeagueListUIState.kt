@@ -1,3 +1,9 @@
-package com.huseyinkiran.simplescore.presentation
+package com.huseyinkiran.simplescore.presentation.leagueList
 
-data class LeagueListUIState(val )
+import com.huseyinkiran.simplescore.presentation.leagueList.model.LeagueUIModel
+
+data class LeagueListUIState(
+    val isLoading: Boolean = false,
+    val leagueList: List<LeagueUIModel> = emptyList(),
+    val errorMessage: String? = null
+)
